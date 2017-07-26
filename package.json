@@ -1,0 +1,17 @@
+{
+  "name": "insuranceqa-corpus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/translate": "^1.0.0",
+    "ava": "^0.21.0",
+    "jsonfile": "^3.0.1",
+    "lodash": "^4.17.4"
+  }
+}
