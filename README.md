@@ -17,13 +17,12 @@
 
 ## 语料数据
 
-| - | 问题      |  答案  | 词汇  | 
+| - | 问题      |  答案  | 词汇（英语）  | 
 | ------------- |-------------| ----- |   ----- |           
 | 训练      | 12,889 | 21,325  |    107,889        |
 | 验证      | 2,000     |  3354 |   16,931          |
 | 测试       | 2,000      |    3308 |  16,815            |
 
-一共有 27,413 个回答， (TODO 补充词汇数量)，数据格式为 ```json```:
 
 ```
 {
@@ -38,14 +37,14 @@
 }
 ```
 
-训练：```corpus/train.json```
+* 训练：```corpus/train.json```
 
-验证：```corpus/valid.json```
+* 验证：```corpus/valid.json```
 
-测试：```corpus/test.json```
+* 测试：```corpus/test.json```
 
-答案：```corpus/answers.json```
-
+* 答案：```corpus/answers.json```
+一共有 27,413 个回答，数据格式为 ```json```:
 ```
 {
     "INDEX": {
@@ -75,7 +74,7 @@
 本数据集使用翻译 [insuranceQA](https://github.com/shuzi/insuranceQA)而生成，代码发布证书 GPL 3.0。数据仅限于研究用途，如果在发布的任何媒体、期刊、杂志或博客等内容时，必须注明引用和地址。
 
 ```
-InsuranceQA Corpus, Samurais, https://github.com/Samurais/insuranceqa-corpus-zh, 07 27, 2017
+InsuranceQA Corpus, Hai Liang Wang, https://github.com/Samurais/insuranceqa-corpus-zh, 07 27, 2017
 ```
 
 任何基于[insuranceqa-corpus](https://github.com/Samurais/insuranceqa-corpus-zh)衍生的数据也需要开放并需要声明和“声明1”和“声明2”一致的内容。
