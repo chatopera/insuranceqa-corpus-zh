@@ -78,21 +78,6 @@ test.skip('process label2answer#', async (t) => {
     t.pass()
 })
 
-const raw_json = [
-    "InsuranceQA.question.anslabel.raw.100.pool.solr.test.encoded.gz.json",
-    "InsuranceQA.question.anslabel.raw.100.pool.solr.train.encoded.gz.json",
-    "InsuranceQA.question.anslabel.raw.100.pool.solr.valid.encoded.gz.json"
-    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.test.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.train.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.valid.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.test.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.train.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.valid.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.500.pool.solr.test.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.500.pool.solr.train.encoded.gz.json",
-    // "InsuranceQA.question.anslabel.raw.500.pool.solr.valid.encoded.gz.json"
-]
-
 async function translate_job(data, file_basename) {
     var post = {}
     var untrans = {}
@@ -140,9 +125,23 @@ async function translate_job(data, file_basename) {
 }
 
 test.skip('process InsuranceQA.question.anslabel.raw', async (t) => {
+    // "InsuranceQA.question.anslabel.raw.100.pool.solr.test.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.100.pool.solr.train.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.100.pool.solr.valid.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.test.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.train.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1000.pool.solr.valid.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.test.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.train.encoded.gz.json",
+    // "InsuranceQA.question.anslabel.raw.1500.pool.solr.valid.encoded.gz.json",
+
+    const raw_json = ["InsuranceQA.question.anslabel.raw.500.pool.solr.test.encoded.gz.json",
+        "InsuranceQA.question.anslabel.raw.500.pool.solr.train.encoded.gz.json",
+        "InsuranceQA.question.anslabel.raw.500.pool.solr.valid.encoded.gz.json"
+    ]
     for (let x in raw_json) {
         console.log('Processing data ' + raw_json[x])
-        let data = require('../' + raw_json[x])
+        let data = require('../tmp/' + raw_json[x])
         let file_path = path.join(__dirname, '../' + path.basename(raw_json[x]))
         await translate_job(data, file_path)
     }
@@ -169,7 +168,7 @@ test.skip('process untrans InsuranceQA.label2answer', async (t) => {
 })
 
 test.skip('process merge InsuranceQA.label2answer', async (t) => {
-    var pre = require('../insuranceqa.pool.100/answers.201707261842.json')
+    var pre = require('../corpus/answers.201707261842.json')
     console.log("data pre", _.keys(pre).length)
     var rc2 = require('../tmp/label2answer.zh-CN.r2.json')
     console.log("data rc2", _.keys(rc2).length)
@@ -184,7 +183,7 @@ test.skip('process merge InsuranceQA.label2answer', async (t) => {
     var result3 = sortByKeys(result2)
     console.log("data total", _.keys(result3).length)
 
-    await dump('./insuranceqa.pool.100/answers.json', result3)
+    await dump('./corpus/answers.json', result3)
     t.pass()
 })
 
@@ -212,8 +211,8 @@ test.skip('process trans answers on check', async (t) => {
 })
 
 test.skip('combine questions en_US and zh_CN', async (t) => {
-    const zh = require('../insuranceqa.pool.100/train.zh_CN.json')
-    const en = require('../insuranceqa.pool.100/train.en_US.json')
+    const zh = require('../corpus/train.zh_CN.json')
+    const en = require('../corpus/train.en_US.json')
     var result = {}
 
     if ((_.keys(zh)).length !== (_.keys(en)).length) {
@@ -226,17 +225,17 @@ test.skip('combine questions en_US and zh_CN', async (t) => {
             en: en[x]['question_en'].trim(),
             domain: en[x]['domain'],
             answers: en[x]['ground_truth'],
-            evidences: en[x]['pool']
+            pool: en[x]['pool']
         }
     }
 
     console.log("all size", _.keys(result).length)
-    await dump('./insuranceqa.pool.100/train.json', sortByKeys(result))
+    await dump('./corpus/train.json', sortByKeys(result))
     t.pass()
 })
 
 test.skip('validate answers', (t) => {
-    const data = require('../insuranceqa.pool.100/answers.json')
+    const data = require('../corpus/answers.json')
     var result = {}
 
     for (let x in data) {
@@ -247,5 +246,80 @@ test.skip('validate answers', (t) => {
     }
 
     console.log("all size", _.keys(data).length)
+    t.pass()
+})
+
+
+async function convertEviencesToPool(file) {
+    var data = require(file);
+    for (let x in data) {
+        // console.log('index', x)
+        data[x]['pool'] = data[x]['evidences']
+        delete data[x]['evidences']
+    }
+    await dump(path.basename(file) + '.post.json', data)
+}
+
+test.skip('convert evidences to pool', async (t) => {
+    const files = [
+        '../corpus/valid.json',
+        '../corpus/test.json',
+        '../corpus/train.json'
+    ]
+    for (let x in files) {
+        await convertEviencesToPool(files[x])
+    }
+
+    t.pass()
+})
+
+async function regenPoolData(target, pool_size) {
+    var data = require(target.path);
+    var source = require(target.retune)
+    for (let x in data) {
+        var spool = source[x]['pool']
+        if (spool.length != 500) {
+            throw new Error('Wrong length for spool.')
+        }
+
+        if (source[x]['question_en'].trim() != data[x]['en']) {
+            throw new Error('Wrong info text for question.')
+        }
+        var tpool = []
+        var answers = data[x]['answers']
+        var index = 0
+        while(tpool.length < pool_size){
+            if(!_.includes(answers, spool[index])){
+                tpool.push(spool[index])
+            }
+            index += 1;
+        }
+        data[x]['negatives'] = tpool;
+        delete data[x]['pool']
+    }
+    await dump(path.basename(target.path) + '.repool.json', data)
+}
+
+test.skip('regen pool', async (t) => {
+    const pool_size = 200
+    const files = [
+        {
+            path: '../corpus/valid.json',
+            retune: '../tmp/InsuranceQA.question.anslabel.raw.500.pool.solr.valid.encoded.gz.json'
+        },
+        {
+            path: '../corpus/train.json',
+            retune: '../tmp/InsuranceQA.question.anslabel.raw.500.pool.solr.train.encoded.gz.json'
+        },
+        {
+            path: '../corpus/test.json',
+            retune: '../tmp/InsuranceQA.question.anslabel.raw.500.pool.solr.test.encoded.gz.json'
+        }
+    ]
+
+    for (let x in files) {
+        await regenPoolData(files[x], pool_size)
+    }
+
     t.pass()
 })
