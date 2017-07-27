@@ -57,15 +57,21 @@
 
 ### 中英文对照文件
 
+#### 问答对
+
 ```
 格式 INDEX ++$++ 保险种类 ++$++ 中文 ++$++ 英文
 ```
 
-训练：```corpus/train.txt```
+```corpus/train.txt```, ```corpus/valid.txt```, ```corpus/test.txt```.
 
-验证：```corpus/valid.txt```
+#### 答案
 
-测试：```corpus/test.txt```
+```
+格式 INDEX ++$++ 中文 ++$++ 英文
+```
+
+```corpus/answers.txt```
 
 ## 声明
 
