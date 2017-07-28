@@ -74,6 +74,28 @@
 
 ```corpus/answers.txt```
 
+## 快速开始
+
+### 在Python环境中，使用pip安装
+
+```python
+pip install --upgrade insuranceqa_data
+
+import insuranceqa_data as insuranceqa
+train_data = insuranceqa.load_train()
+test_data = insuranceqa.load_train()
+valid_data = insuranceqa.load_train()
+
+# valid_data, test_data and train_data share the same properties
+for x in train_data:
+    print('index %s value: %s ++$++ %s ++$++ %s' % \
+     (x, d[x]['zh'], d[x]['en'], d[x]['answers'], d[x]['negatives']))
+
+answers_data = insuranceqa.load_answers()
+for x in answers_data:
+    print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
+```
+
 ## 声明
 
 声明1 : [insuranceqa-corpus-zh](https://github.com/Samurais/insuranceqa-corpus-zh)
