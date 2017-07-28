@@ -78,9 +78,15 @@
 
 ### 在Python环境中，使用pip安装
 
-```python
-pip install --upgrade insuranceqa_data
+兼容py2, py3
 
+```
+pip install --upgrade insuranceqa_data
+```
+
+### 加载数据对象
+
+```python
 import insuranceqa_data as insuranceqa
 train_data = insuranceqa.load_train()
 test_data = insuranceqa.load_train()
