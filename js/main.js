@@ -434,6 +434,10 @@ test.only('10. gen pair data', async (t) => {
                     utterance: answer_ids,
                     label: [1, 0] // label[0]: is answer, label[1]: is negative
                 })
+                // for every question, provide one correct answer
+                if(o == 0){
+                    break;
+                }
             }
             let negtives = parse_raw_string_to_json(negtives_raw)
             debug('index', index, 'negatives', negtives)
@@ -446,6 +450,10 @@ test.only('10. gen pair data', async (t) => {
                     utterance: negtive_ids,
                     label: [0, 1] // label[0]: is answer, label[1]: is negative                
                 })
+                // for every question, provide nine negtive answer
+                if(o == 9){
+                    break;
+                }
             }
         }
         console.log(file_path, 'pair_data size', pair_data.length, 'saved ', path.join(__dirname, target_path))
