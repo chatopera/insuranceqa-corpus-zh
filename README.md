@@ -13,9 +13,22 @@
 
 * 在上述论文中，语料库用于答复选择任务。 另一方面，这种语料库的其他用法也是可能的。 例如，通过阅读理解答案，观察学习等自主学习，使系统能够最终拿出自己的看不见的问题的答案。
 
+* 数据集分为两个部分“问答语料”和“问答对语料”。问答语料是从原始英文数据翻译过来，未经其他处理的。问答对语料是基于问答语料，又做了分词和去标去停，添加label。所以，"问答对语料"可以直接对接机器学习任务。如果对于数据格式不满意或者对分词效果不满意，可以直接对"问答语料"使用其他方法进行处理，获得可以用于训练模型的数据。
+
 欢迎任何进一步增加此数据集的想法。
 
-## 语料数据
+## 安装
+
+因为目前数据包大小大于pypi.python.org支持的最大限制，所以，不能分发到pypi.python.org。
+下载链接：[百度网盘](https://pan.baidu.com/s/1i5MM6nb) 密码: 8u98
+
+```
+tar xzf insuranceqa_data-xxx.tar.gz # xxx is the version
+cd insuranceqa_data-xxx
+python setup.py install
+```
+
+## 问答语料
 
 | - | 问题      |  答案  | 词汇（英语）  | 
 | ------------- |-------------| ----- |   ----- |           
@@ -101,6 +114,29 @@ answers_data = insuranceqa.load_pool_answers()
 for x in answers_data:
     print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
 ```
+
+## 问答对语料
+使用"问答语料"，还需要做很多工作才能进入机器学习的模型，比如分词，去停用词，去标点符号，添加label标记。所以，在"问答语料"的基础上，还可以继续处理，但是在分词等任务中，可以借助不同分词工具，这点对于模型训练而言是有影响的。为了使数据能快速可用，[insuranceqa-corpus-zh](https://github.com/Samurais/insuranceqa-corpus-zh)提供了一个使用[HanLP](https://github.com/hankcs/HanLP)分词和去标，去停，添加label的数据集，这个数据集完全是基于"问答语料"。
+
+```python
+import insuranceqa_data as insuranceqa
+train_data = insuranceqa.load_pairs_train()
+test_data = insuranceqa.load_pairs_test()
+valid_data = insuranceqa.load_pairs_valid()
+
+# valid_data, test_data and train_data share the same properties
+for x in test_data:
+    print('index %s value: %s ++$++ %s ++$++ %s' % \
+     (x['qid'], x['question'], x['utterance'], x['label']))
+
+vocab_data = insuranceqa.load_pairs_vocab()
+for x in vocab_data:
+    print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
+```
+
+```vocab_data```包含```dict_word_to_id```(从word到id), ```dict_id_to_word```(从id到word),```tf```(词频统计)和```total```(单词总数)。 其中，未登录词的标识为```UNKNOWN```，未登录词的id为0。
+
+```train_data```, ```test_data``` 和 ```valid_data``` 的数据格式一样。```qid``` 是问题Id，```question``` 是问题，```utterance``` 是回复，```label``` 如果是 ```[1,0]``` 代表回复是正确答案，```[0,1]``` 代表回复不是正确答案，所以 ```utterance``` 包含了正例和负例的数据，每个问题，含有200个负例，至少含有1个正例，正例数据在1-5个左右。
 
 ## 声明
 
