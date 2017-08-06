@@ -141,7 +141,7 @@ Michael R. Glass, Lidan Wang, Bowen Zhou @ 2015
 """
 
 setup(name='insuranceqa_data',
-      version='1.2',
+      version='1.3',
       description='Insuranceqa Corpus in Chinese for Machine Learning',
       long_description=LONGDOC,
       author='Hai Liang Wang',
@@ -168,5 +168,5 @@ setup(name='insuranceqa_data',
       keywords='corpus,machine-learning,deep-learning,NLP,question-answering',
       packages= find_packages(),
       # package_dir={'insuranceqa_data':['insuranceqa_data']},
-      package_data={'insuranceqa_data':['*json.gz', 'LICENSE']}
+      package_data={'insuranceqa_data':['**/*json.gz', 'LICENSE']}
 )

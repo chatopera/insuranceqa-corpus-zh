@@ -84,20 +84,20 @@
 pip install --upgrade insuranceqa_data
 ```
 
-### 加载数据对象
+### 加载数据
 
 ```python
 import insuranceqa_data as insuranceqa
-train_data = insuranceqa.load_train()
-test_data = insuranceqa.load_train()
-valid_data = insuranceqa.load_train()
+train_data = insuranceqa.load_pool_train()
+test_data = insuranceqa.load_pool_test()
+valid_data = insuranceqa.load_pool_valid()
 
 # valid_data, test_data and train_data share the same properties
 for x in train_data:
     print('index %s value: %s ++$++ %s ++$++ %s' % \
      (x, d[x]['zh'], d[x]['en'], d[x]['answers'], d[x]['negatives']))
 
-answers_data = insuranceqa.load_answers()
+answers_data = insuranceqa.load_pool_answers()
 for x in answers_data:
     print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
 ```
