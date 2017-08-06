@@ -19,13 +19,8 @@
 
 ## 安装
 
-因为目前数据包大小大于pypi.python.org支持的最大限制，所以，不能分发到pypi.python.org。
-下载链接：[百度网盘](https://pan.baidu.com/s/1i5MM6nb) 密码: 8u98
-
 ```
-tar xzf insuranceqa_data-xxx.tar.gz # xxx is the version
-cd insuranceqa_data-xxx
-python setup.py install
+pip install --upgrade insuranceqa_data
 ```
 
 ## 问答语料
@@ -130,11 +125,13 @@ for x in test_data:
      (x['qid'], x['question'], x['utterance'], x['label']))
 
 vocab_data = insuranceqa.load_pairs_vocab()
-for x in vocab_data:
-    print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
+vocab_data['dict_word_to_id']['UNKNOWN']
+vocab_data['dict_id_to_word'][0]
+vocab_data['tf']
+vocab_data['total']
 ```
 
-```vocab_data```包含```dict_word_to_id```(从word到id), ```dict_id_to_word```(从id到word),```tf```(词频统计)和```total```(单词总数)。 其中，未登录词的标识为```UNKNOWN```，未登录词的id为0。
+```vocab_data```包含```dict_word_to_id```(dict, 从word到id), ```dict_id_to_word```(dict, 从id到word),```tf```(dict, 词频统计)和```total```(单词总数)。 其中，未登录词的标识为```UNKNOWN```，未登录词的id为0。
 
 ```train_data```, ```test_data``` 和 ```valid_data``` 的数据格式一样。```qid``` 是问题Id，```question``` 是问题，```utterance``` 是回复，```label``` 如果是 ```[1,0]``` 代表回复是正确答案，```[0,1]``` 代表回复不是正确答案，所以 ```utterance``` 包含了正例和负例的数据。每个问题含有10个负例和1个正例。
 
