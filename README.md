@@ -2,11 +2,15 @@
 
 ![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
-# Welcome
+# 保险行业语料库
 
-Baseline model for [insuranceqa-corpus-zh](https://github.com/Samurais/insuranceqa-corpus-zh/wiki).
+[详细文档](https://github.com/Samurais/insuranceqa-corpus-zh/wiki)
 
-Baseline: mini-batch size = 100, hidden_layers = [100, 50], lr = 0.0001.
+# 基线
+
+Baseline model for [insuranceqa-corpus-zh](https://github.com/Samurais/insuranceqa-corpus-zh/wiki) 
+
+mini-batch size = 100, hidden_layers = [100, 50], lr = 0.0001.
 
 ![](./deep_qa_1/baseline_acc.png)
 
