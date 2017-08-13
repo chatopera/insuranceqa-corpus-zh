@@ -33,6 +33,8 @@ python3 visual/accuracy.py
 python3 visual/loss.py
 ```
 
+下载[文档](./deep_qa_1/baseline_article.pdf)了解更多关于DeepQA-1的实现和Baseline。
+
 ## 声明
 
 声明1 : [insuranceqa-corpus-zh](https://github.com/Samurais/insuranceqa-corpus-zh)

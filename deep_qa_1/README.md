@@ -1,7 +1,3 @@
 # deep_qa_1
 
-
-## Test data module
-```
-py.test -s -v -f ./deep_qa_1/data.py
-```
+下载[文档](./baseline_article.pdf)了解更多关于DeepQA-1的实现和Baseline。
