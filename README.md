@@ -1,10 +1,13 @@
-# 保险行业语料库
-
 ![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
 # 保险行业语料库
-
 [详细文档](https://github.com/Samurais/insuranceqa-corpus-zh/wiki)
+
+# 大家怎么说
+
+> 看了下您的项目，我觉得这份数据可以用于保险领域的中文问答研究，对于较短的问题翻译很准确，长度较长的答案翻译就有些不连贯的问题，大体上关键词信息和一些上下文信息都有，我觉得是份很好的中文语料。 - [fssqawj](https://github.com/fssqawj), East China Normal University
+
+> Excellent work! - [rgtjf](https://github.com/rgtjf), East China Normal University
 
 # 基线
 
