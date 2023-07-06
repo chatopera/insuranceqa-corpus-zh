@@ -3,7 +3,7 @@ matplotlib==2.0.2
 numpy==1.13.1
 pandas==0.20.3
 scikit-learn==0.18.1
-scipy==0.19.1
+scipy==1.10.0
 six==1.10.0
 virtualenv==15.1.0
 virtualenv-clone==0.2.4
