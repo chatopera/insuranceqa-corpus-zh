@@ -47,11 +47,12 @@ python -c "import insuranceqa_data; insuranceqa_data.download_corpus()"
 ```
 
 
-## 数据格式
+## 数据格式说明
 
-[问答对数据](https://github.com/chatopera/insuranceqa-corpus-zh/wiki/%E9%97%AE%E7%AD%94%E5%AF%B9%E6%95%B0%E6%8D%AE)
+* [数据格式设计](https://github.com/chatopera/insuranceqa-corpus-zh/wiki/%E9%97%AE%E7%AD%94%E6%95%B0%E6%8D%AE)
 
-[问答数据](https://github.com/chatopera/insuranceqa-corpus-zh/wiki/%E9%97%AE%E7%AD%94%E8%AF%AD%E6%96%99)
+* [加载读取数据](https://github.com/chatopera/insuranceqa-corpus-zh/wiki/%E9%97%AE%E7%AD%94%E5%AF%B9%E6%95%B0%E6%8D%AE)
+
 
 ## 机器学习项目
 
