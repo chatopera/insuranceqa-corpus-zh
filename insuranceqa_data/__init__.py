@@ -74,33 +74,6 @@ def download_corpus(force=False):
 def load(data_path, download = False):
     if (not os.path.exists(data_path)) and download:
         download_corpus(force=True)
-        # data_dir = os.path.split(os.path.split(data_path)[0])[0]
-        # if not os.path.exists(data_dir):
-        #     os.mkdir(data_dir)
-        # if not os.path.exists(os.path.join(data_dir, 'pairs')):
-        #     os.mkdir(os.path.join(data_dir, 'pairs'))
-        # if not os.path.exists(os.path.join(data_dir, 'pool')):
-        #     os.mkdir(os.path.join(data_dir, 'pool'))
-        # print('\n Now download data to dir {}'.format(data_dir))
-        # # download all pair data
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.test.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.test.json.gz", out = os.path.join(data_dir, 'pairs'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.train.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.train.json.gz", out = os.path.join(data_dir, 'pairs'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.valid.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.valid.json.gz", out = os.path.join(data_dir, 'pairs'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.vocab.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pairs/iqa.vocab.json.gz", out = os.path.join(data_dir, 'pairs'))
-
-        # # download all pool data
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/answers.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/answers.json.gz", out = os.path.join(data_dir, 'pool'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/test.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/test.json.gz", out = os.path.join(data_dir, 'pool'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/train.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/train.json.gz", out = os.path.join(data_dir, 'pool'))
-        # print("\n [insuranceqa_data] downloading data %s ... \n" % "https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/valid.json.gz")
-        # wget.download("https://github.com/Samurais/insuranceqa-corpus-zh/raw/release/corpus/pool/valid.json.gz", out = os.path.join(data_dir, 'pool'))
     elif not os.path.exists(data_path):
         raise AssertionError("Data path not found %s" % data_path)
 
@@ -113,32 +86,40 @@ pool data are translated Chinese data with Google API from original English data
 '''
 
 def load_pool_test(data_path=None):
+    download = False
     if data_path is None:
         POOL_TEST_DATA = os.path.join(CORPUS_FOLDER_PATH, 'pool', 'test.json.gz')
+        download = True
     else:
         POOL_TEST_DATA = os.path.join(data_path, 'pool', 'test.json.gz')
-    return load(POOL_TEST_DATA)
+    return load(POOL_TEST_DATA, download=download)
 
 def load_pool_valid(data_path=None):
+    download = False
     if data_path is None:
         POOL_VALID_DATA = os.path.join(CORPUS_FOLDER_PATH, 'pool', 'valid.json.gz')
+        download = True
     else:
         POOL_VALID_DATA = os.path.join(data_path, 'pool', 'valid.json.gz')
-    return load(POOL_VALID_DATA)
+    return load(POOL_VALID_DATA, download=download)
 
 def load_pool_train(data_path=None):
+    download = False
     if data_path is None:
         POOL_TRAIN_DATA = os.path.join(CORPUS_FOLDER_PATH, 'pool', 'train.json.gz')
+        download = True
     else:
         POOL_TRAIN_DATA = os.path.join(data_path, 'pool', 'train.json.gz')
-        return load(POOL_TRAIN_DATA)
+        return load(POOL_TRAIN_DATA, download=download)
 
 def load_pool_answers(data_path=None):
+    download = False
     if data_path is None:
         POOL_ANS_DATA = os.path.join(CORPUS_FOLDER_PATH, 'pool', 'answers.json.gz')
+        download = True
     else:
         POOL_ANS_DATA = os.path.join(data_path, 'pool', 'answers.json.gz')
-    return load(POOL_ANS_DATA)
+    return load(POOL_ANS_DATA, download=download)
 
 # def __test_qa():
 #     d = load_train()
