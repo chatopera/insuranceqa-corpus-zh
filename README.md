@@ -40,7 +40,10 @@ export INSQA_DL_LICENSE=YOUR_LICENSE
 ## e.g. if your license id is `FOOBAR`, run `export INSQA_DL_LICENSE=FOOBAR`
 
 # Windows
+## 1/2 Command Prompt
 set INSQA_DL_LICENSE=YOUR_LICENSE
+## 2/2 PowerShell
+$env:INSQA_DL_LICENSE='YOUR_LICENSE'
 ```
 
 最后，执行以下命令，完成数据的下载。

@@ -50,7 +50,7 @@ Michael R. Glass, Lidan Wang, Bowen Zhou @ 2015
 """
 
 setup(name='insuranceqa_data',
-      version='2.5.1',
+      version='2.5.2',
       description='Insuranceqa Corpus in Chinese for Machine Learning',
       long_description=LONGDOC,
       author='Hai Liang Wang',
@@ -77,7 +77,7 @@ setup(name='insuranceqa_data',
       packages=find_packages(),
       # package_dir={'insuranceqa_data':['insuranceqa_data']},
       install_requires=[
-         'chatoperastore>=1.1.1'
+         'chatoperastore>=1.2.0'
       ],
       package_data={'insuranceqa_data': ['**/*md', 'LICENSE']}
       )
