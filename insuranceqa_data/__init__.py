@@ -110,7 +110,7 @@ def load_pool_train(data_path=None):
         download = True
     else:
         POOL_TRAIN_DATA = os.path.join(data_path, 'pool', 'train.json.gz')
-        return load(POOL_TRAIN_DATA, download=download)
+    return load(POOL_TRAIN_DATA, download=download)
 
 def load_pool_answers(data_path=None):
     download = False

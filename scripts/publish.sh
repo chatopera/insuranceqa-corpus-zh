@@ -12,4 +12,6 @@ baseDir=$(cd `dirname "$0"`;pwd)
 cd $baseDir/..
 
 rm -rf build dist
-python setup.py sdist upload -r pypi
+python setup.py clean sdist
+## install twine first `pip install twine`
+twine upload dist/*
