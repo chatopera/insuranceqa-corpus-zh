@@ -68,11 +68,11 @@ valid_data = insuranceqa.load_pool_valid() # 验证集
 # valid_data, test_data and train_data share the same properties
 for x in train_data:                       # 打印数据
     print('index %s value: %s ++$++ %s ++$++ %s' % \
-     (x, d[x]['zh'], d[x]['en'], d[x]['answers'], d[x]['negatives']))
+     (x, train_data[x]['zh'], train_data[x]['en'], train_data[x]['answers'], train_data[x]['negatives']))
 
 answers_data = insuranceqa.load_pool_answers()
 for x in answers_data:                     # 答案数据
-    print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
+    print('index %s: %s ++$++ %s' % (x, answers_data[x]['zh'], answers_data[x]['en']))
 ```
 
 #### 数据设计
