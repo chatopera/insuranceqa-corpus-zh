@@ -82,7 +82,8 @@ def load(data_path, download = False):
         return data
 
 '''
-pool data are translated Chinese data with Google API from original English data
+POOL Data
+1) pool data are translated Chinese data with Google API and reviewd by Human from original English data
 '''
 
 def load_pool_test(data_path=None):
@@ -132,8 +133,20 @@ def load_pool_answers(data_path=None):
 #         print('index %s: %s ++$++ %s' % (x, d[x]['zh'], d[x]['en']))
 
 '''
-pair data are segmented and labeled after pool data
+Pair Data
+1) pair data are segmented and labeled after pool data
 '''
+
+def convert_ids2text(vocab, ids):
+    '''
+    Convert id list into text
+    '''
+    words = []
+    for x in ids:
+        if x in vocab["id2word"]:
+            words.append(vocab["id2word"][x])
+
+    return "".join(words)
 
 def load_pairs_vocab(data_path=None):
     '''

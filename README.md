@@ -32,7 +32,34 @@ pip install -U insuranceqa_data
 
 ![](https://cdndownload2.chatopera.com/store/imgs/insqa001-ordering-img.jpg)
 
-然后，设置环境变量 `INSQA_DL_LICENSE`，比如使用命令行终端：
+
+然后，通过以下两种形式完成下载。
+
+* 方式1：Python 源代码
+
+```python
+import os
+
+# 设置证书标识，购买自 https://store.chatopera.com/product/insqa001
+os.environ["INSQA_DL_LICENSE"] = "YOUR_LICENSE" # 
+_licenseid = os.environ.get("INSQA_DL_LICENSE", None)
+print("INSQA_DL_LICENSE=%s" % _licenseid)
+
+# 初次下载数据
+import insuranceqa_data
+insuranceqa_data.download_corpus()
+```
+
+将上面 `YOUR_LICENSE` 修改为您的 证书标识！！！然后执行这段 Python 脚本，比如将上述脚本保存为 `download.py`，然后执行：
+
+```bash
+python download.py
+```
+
+
+* 方式2：设置环境变量
+
+设置环境变量 `INSQA_DL_LICENSE`，比如使用命令行终端：
 
 ```bash
 # Linux / macOS
@@ -55,25 +82,28 @@ python -c "import insuranceqa_data; insuranceqa_data.download_corpus()"
 
 ## 数据格式说明
 
-数据分为两种：POOL 格式；PAIR 格式。其中，PAIR 格式更适合用于机器学习训练模型。
-
-### 加载 POOL 数据
-
 ```python
-import insuranceqa_data as insuranceqa
-train_data = insuranceqa.load_pool_train() # 训练集
-test_data = insuranceqa.load_pool_test()   # 测试集
-valid_data = insuranceqa.load_pool_valid() # 验证集
+# 读取数据测试
+train_data = insuranceqa_data.load_pool_train() # 训练集
+test_data = insuranceqa_data.load_pool_test()   # 测试集
+valid_data = insuranceqa_data.load_pool_valid() # 验证集
+answers_data = insuranceqa_data.load_pool_answers()
 
-# valid_data, test_data and train_data share the same properties
+
+# 打印 训练集 数据；测试集和验证集与 训练集 数据结构一致
 for x in train_data:                       # 打印数据
-    print('index %s value: %s ++$++ %s ++$++ %s' % \
-     (x, train_data[x]['zh'], train_data[x]['en'], train_data[x]['answers'], train_data[x]['negatives']))
-
-answers_data = insuranceqa.load_pool_answers()
-for x in answers_data:                     # 答案数据
-    print('index %s: %s ++$++ %s' % (x, answers_data[x]['zh'], answers_data[x]['en']))
+    print('\n\nIndex %s \n question: %s' % \
+     (x, train_data[x]['zh']))
+    print(" answer: ")
+    idx = 0
+    for y in train_data[x]['answers']:
+        idx += 1
+        print("   %d. %s" % (idx, answers_data[y]["zh"]))
 ```
+
+![alt text](assets/media/1748242469631.png)
+
+数据格式的详细介绍见下。
 
 #### 数据设计
 
@@ -114,76 +144,6 @@ for x in answers_data:                     # 答案数据
     },
     more ...
 }
-```
-
-#### 中英文对照文件
-
-##### 问答对
-
-```
-格式 INDEX ++$++ 保险种类 ++$++ 中文 ++$++ 英文
-```
-
-```corpus/pool/train.txt.gz```, ```corpus/pool/valid.txt.gz```, ```corpus/pool/test.txt.gz```.
-
-##### 答案
-
-```
-格式 INDEX ++$++ 中文 ++$++ 英文
-```
-
-```corpus/pool/answers.txt.gz```
-
-**语料库使用gzip进行压缩以减小体积，可以使用zmore, zless, zcat, zgrep等命令访问数据。**
-
-```
-zmore pool/test.txt.gz
-```
-
-### 加载 PAIR 数据
-
-使用["问答数据"](https://github.com/chatopera/insuranceqa-corpus-zh/wiki/%E9%97%AE%E7%AD%94%E8%AF%AD%E6%96%99)，还需要做很多工作才能进入机器学习的模型，比如分词，去停用词，去标点符号，添加label标记。所以，在"问答数据"的基础上，还可以继续处理，但是在分词等任务中，可以借助不同分词工具，这点对于模型训练而言是有影响的。为了使数据能快速可用，[insuranceqa-corpus-zh](https://github.com/chatopera/insuranceqa-corpus-zh)提供了一个使用[HanLP](https://github.com/hankcs/HanLP)分词和去标，去停，添加label的数据集，这个数据集完全是基于"问答数据"。
-
-#### 加载数据
-
-```python
-import insuranceqa_data as insuranceqa
-train_data = insuranceqa.load_pairs_train()
-test_data = insuranceqa.load_pairs_test()
-valid_data = insuranceqa.load_pairs_valid()
-
-# valid_data, test_data and train_data share the same properties
-for x in test_data:
-    print('index %s value: %s ++$++ %s ++$++ %s' % \
-     (x['qid'], x['question'], x['utterance'], x['label']))
-
-vocab_data = insuranceqa.load_pairs_vocab()
-vocab_data['word2id']['UNKNOWN']
-vocab_data['id2word'][0]
-vocab_data['tf']
-vocab_data['total']
-```
-
-#### 数据设计
-
-```vocab_data```包含```word2id```(dict, 从word到id), ```id2word```(dict, 从id到word),```tf```(dict, 词频统计)和```total```(单词总数)。 其中，未登录词的标识为```UNKNOWN```，未登录词的id为0。
-
-```train_data```, ```test_data``` 和 ```valid_data``` 的数据格式一样。```qid``` 是问题Id，```question``` 是问题，```utterance``` 是回复，```label``` 如果是 ```[1,0]``` 代表回复是正确答案，```[0,1]``` 代表回复不是正确答案，所以 ```utterance``` 包含了正例和负例的数据。每个问题含有10个负例和1个正例。
-
-```train_data```含有问题12,889条，数据 ```141779```条，正例：负例 = 1:10
-```test_data```含有问题2,000条，数据 ```22000```条，正例：负例 = 1:10
-```valid_data```含有问题2,000条，数据 ```22000```条，正例：负例 = 1:10
-
-句子长度:
-
-```
-max len of valid question : 31, average: 5(max)
-max len of valid utterance: 878(max), average: 165(max)
-max len of test question : 33, average: 5
-max len of test utterance: 878, average: 161
-max len of train question : 42(max), average: 5
-max len of train utterance: 878, average: 162
-vocab size: 24997
 ```
 
 ## 机器学习项目
